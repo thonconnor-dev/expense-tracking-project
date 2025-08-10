@@ -1,5 +1,7 @@
 package com.thonconnor.practice.expense_tracking.mappers;
 
+import java.util.Optional;
+
 import org.springframework.stereotype.Component;
 
 import com.thonconnor.practice.expense_tracking.entities.CategoryEntity;
@@ -15,11 +17,12 @@ public class CategoryMapper {
      * @return CategoryModel
      */
     public CategoryModel map(CategoryEntity categoryEntity) {
-        return CategoryModel.builder()
+        return Optional.ofNullable(categoryEntity).map(entity -> CategoryModel.builder()
                 .id(categoryEntity.getId())
                 .name(categoryEntity.getName())
                 .type(categoryEntity.getType())
-                .build();
+                .build())
+                .orElse(null);
     }
 
     /**
@@ -29,7 +32,9 @@ public class CategoryMapper {
      * @return CategoryEntity
      */
     public CategoryEntity map(CategoryModel categoryModel) {
-        return new CategoryEntity(null, categoryModel.getName(), categoryModel.getType());
+        return Optional.ofNullable(categoryModel)
+                .map(model -> new CategoryEntity(null, categoryModel.getName(), categoryModel.getType()))
+                .orElse(null);
     }
 
 }

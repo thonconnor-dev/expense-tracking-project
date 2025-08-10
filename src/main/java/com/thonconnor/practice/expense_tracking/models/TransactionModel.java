@@ -12,7 +12,7 @@ import lombok.Data;
 public class TransactionModel {
     private long id;
     private double amount;
-    private String userId;
+    private long userId;
     private CategoryModel category;
     private String description;
     private IncomeModel income;
