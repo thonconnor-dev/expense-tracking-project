@@ -44,5 +44,7 @@ public class TransactionEntity {
     @OneToOne
     @JoinColumn(name = "expense_id", nullable = true)
     private ExpenseEntity expense;
+    @Column(name = "transaction_type", nullable = false)
+    private String type;
 
 }

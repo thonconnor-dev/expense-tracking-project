@@ -15,8 +15,7 @@ public class TransactionModel {
     private long userId;
     private CategoryModel category;
     private String description;
-    private IncomeModel income;
-    private ExpenseModel expense;
+    private String type;
     private LocalDate transactionDate;
     private LocalDate createdDate;
 
