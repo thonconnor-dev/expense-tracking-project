@@ -9,6 +9,7 @@ import com.thonconnor.practice.expense_tracking.models.CategoryModel;
 import com.thonconnor.practice.expense_tracking.models.ResponseResult;
 import com.thonconnor.practice.expense_tracking.services.CategoryService;
 
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -29,6 +30,7 @@ public class CategoryController {
      * 
      * @return ResponseEntity containing a ResponseResult with CategoriesModel
      */
+    @Operation(summary = "List all categories")
     @GetMapping(path = "/categories", produces = "application/json")
     public ResponseEntity<ResponseResult<CategoriesModel>> getAllCategories() {
         log.info("get all categories");
@@ -45,6 +47,7 @@ public class CategoryController {
      * @param categoryRequest
      * @return category model
      */
+    @Operation(summary = "create category")
     @PostMapping(path = "/category", produces = "application/json")
     public ResponseEntity<ResponseResult<CategoryModel>> createCategory(@RequestBody CategoryModel categoryRequest) {
         log.info("create category");
@@ -58,6 +61,7 @@ public class CategoryController {
      * @param categoryModel
      * @return category model
      */
+    @Operation(summary = "edit category")
     @PutMapping(path = "category", produces = "application/json")
     public ResponseEntity<ResponseResult<CategoryModel>> editCategory(@RequestBody CategoryModel categoryModel) {
         log.info("edit cateogry");
