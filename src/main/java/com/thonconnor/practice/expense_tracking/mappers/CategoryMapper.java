@@ -37,4 +37,17 @@ public class CategoryMapper {
                 .orElse(null);
     }
 
+    /**
+     * map updated fields of category from model to entity
+     * 
+     * @param categoryEntity
+     * @param categoryModel
+     * @return instance of category entity with new updated value
+     */
+    public CategoryEntity mapEditedAttributes(CategoryEntity categoryEntity, CategoryModel categoryModel) {
+        categoryEntity.setName(categoryModel.getName());
+        categoryEntity.setType(categoryModel.getType());
+        return categoryEntity;
+    }
+
 }

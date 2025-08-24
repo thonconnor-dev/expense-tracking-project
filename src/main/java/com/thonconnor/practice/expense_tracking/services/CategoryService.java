@@ -6,10 +6,12 @@ import java.util.Optional;
 import org.springframework.data.util.Streamable;
 import org.springframework.stereotype.Service;
 
+import com.thonconnor.practice.expense_tracking.entities.CategoryEntity;
 import com.thonconnor.practice.expense_tracking.mappers.CategoryMapper;
 import com.thonconnor.practice.expense_tracking.models.CategoryModel;
 import com.thonconnor.practice.expense_tracking.repositories.CategoryRepository;
 
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -59,5 +61,41 @@ public class CategoryService {
         log.info("find category by name {}", name);
         return categoryRepository.findByName(name)
                 .map(categoryMapper::map);
+    }
+
+    /**
+     * create new category record
+     * 
+     * @param categoryModel
+     * @return category model with new record id
+     */
+    @Transactional
+    public CategoryModel createCategory(CategoryModel categoryModel) {
+        log.info("new category input={}", categoryModel.toString());
+        CategoryEntity categoryEntity = categoryRepository.save(categoryMapper.map(categoryModel));
+        log.info("new category id={}", categoryEntity.getId());
+        categoryModel.setId(categoryEntity.getId());
+        return categoryModel;
+    }
+
+    /**
+     * edit existing category record
+     * 
+     * @param categoryModel
+     * @return category model if updated successfully
+     */
+    @Transactional
+    public CategoryModel editCategory(CategoryModel categoryModel) {
+        log.info("edit category input={}", categoryModel.toString());
+        // TODO validate if id is given
+        Optional<CategoryEntity> categoryEntityOpt = categoryRepository.findById(categoryModel.getId());
+        if (!categoryEntityOpt.isPresent()) {
+            // TODO throw not found exception
+        }
+
+        CategoryEntity updatedCategoryEntity = categoryMapper.mapEditedAttributes(categoryEntityOpt.get(),
+                categoryModel);
+        categoryRepository.save(updatedCategoryEntity);
+        return categoryModel;
     }
 }
