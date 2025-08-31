@@ -2,6 +2,7 @@ package com.thonconnor.practice.expense_tracking.entities;
 
 import java.sql.Timestamp;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -38,10 +39,10 @@ public class TransactionEntity {
     private Timestamp createdDate;
     @Column(name = "transaction_date", nullable = false)
     private Timestamp transactionDate;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "income_id", nullable = true)
     private IncomeEntity income;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "expense_id", nullable = true)
     private ExpenseEntity expense;
     @Column(name = "transaction_type", nullable = false)
