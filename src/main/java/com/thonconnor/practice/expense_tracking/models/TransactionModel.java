@@ -5,11 +5,13 @@ import java.time.LocalDate;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @AllArgsConstructor
 @Data
 @Builder
-public class TransactionModel {
+@EqualsAndHashCode(callSuper = false)
+public class TransactionModel extends BaseModel {
     private long id;
     private double amount;
     private long userId;

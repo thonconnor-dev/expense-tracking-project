@@ -9,7 +9,9 @@ import org.springframework.stereotype.Component;
 import com.thonconnor.practice.expense_tracking.entities.CategoryEntity;
 import com.thonconnor.practice.expense_tracking.entities.TransactionEntity;
 import com.thonconnor.practice.expense_tracking.entities.UserEntity;
+import com.thonconnor.practice.expense_tracking.models.CategoryModel;
 import com.thonconnor.practice.expense_tracking.models.TransactionModel;
+import com.thonconnor.practice.expense_tracking.models.requests.TransactionInput;
 import com.thonconnor.practice.expense_tracking.models.requests.TransactionRequest;
 
 import lombok.AllArgsConstructor;
@@ -52,5 +54,16 @@ public class TransactionMapper {
 
                 return transactionEntity;
 
+        }
+
+        public TransactionModel map(TransactionInput input) {
+                return TransactionModel.builder()
+                                .amount(input.amount())
+                                .description(input.description())
+                                .userId(input.user().userId())
+                                .category(CategoryModel.builder().id(input.categoryId()).build())
+                                .type(input.type())
+                                .transactionDate(input.transactionDate())
+                                .build();
         }
 }
