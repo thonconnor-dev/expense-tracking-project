@@ -1,4 +1,4 @@
-package com.thonconnor.practice.expense_tracking;
+package com.thonconnor.practice.expense_tracking.mappers;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -9,7 +9,6 @@ import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.thonconnor.practice.expense_tracking.entities.CategoryEntity;
-import com.thonconnor.practice.expense_tracking.mappers.CategoryMapper;
 import com.thonconnor.practice.expense_tracking.models.CategoryModel;
 
 @ExtendWith(MockitoExtension.class)
