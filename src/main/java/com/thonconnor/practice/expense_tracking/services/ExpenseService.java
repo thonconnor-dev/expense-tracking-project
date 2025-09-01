@@ -7,11 +7,9 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import com.thonconnor.practice.expense_tracking.entities.ExpenseEntity;
-import com.thonconnor.practice.expense_tracking.entities.IncomeEntity;
 import com.thonconnor.practice.expense_tracking.filters.TransactionFilterSpecification;
 import com.thonconnor.practice.expense_tracking.mappers.ExpenseMapper;
 import com.thonconnor.practice.expense_tracking.models.ExpenseModel;
-import com.thonconnor.practice.expense_tracking.models.IncomeModel;
 import com.thonconnor.practice.expense_tracking.models.requests.ReadListInput;
 import com.thonconnor.practice.expense_tracking.repositories.ExpenseRepository;
 

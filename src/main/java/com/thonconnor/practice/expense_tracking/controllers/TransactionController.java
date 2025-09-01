@@ -3,8 +3,12 @@ package com.thonconnor.practice.expense_tracking.controllers;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.thonconnor.practice.expense_tracking.mappers.TransactionMapper;
+import com.thonconnor.practice.expense_tracking.models.IncomeModel;
+import com.thonconnor.practice.expense_tracking.models.IncomesModel;
 import com.thonconnor.practice.expense_tracking.models.ResponseResult;
 import com.thonconnor.practice.expense_tracking.models.TransactionModel;
+import com.thonconnor.practice.expense_tracking.models.TransactionsModel;
+import com.thonconnor.practice.expense_tracking.models.requests.ReadListInput;
 import com.thonconnor.practice.expense_tracking.models.requests.TransactionInput;
 import com.thonconnor.practice.expense_tracking.services.TransactionService;
 
@@ -13,9 +17,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+import java.time.LocalDate;
+import java.util.List;
+
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Slf4j
 @AllArgsConstructor
@@ -44,6 +54,19 @@ public class TransactionController {
         TransactionModel response = transactionService.createTransaction(transactionMapper.map(input));
         log.info("transaction created successfully id={}", response.getId());
         return ResponseEntity.ok().body(ResponseResult.<TransactionModel>builder().data(response).build());
+    }
+
+    @GetMapping(path = "/transactions", produces = "application/json")
+    public ResponseEntity<ResponseResult<TransactionsModel>> readTransactions(@RequestParam String userId,
+            @RequestParam @DateTimeFormat(pattern = "MM-dd-yyyy") LocalDate startDate,
+            @RequestParam @DateTimeFormat(pattern = "MM-dd-yyyy") LocalDate endDate) {
+        log.info("read transactions - start");
+        List<TransactionModel> transactionModels = transactionService
+                .readTransactionList(new ReadListInput(userId, startDate, endDate, 0));
+        log.info("read transactions - end");
+        return ResponseEntity.ok()
+                .body(ResponseResult.<TransactionsModel>builder().data(new TransactionsModel(transactionModels))
+                        .build());
     }
 
 }

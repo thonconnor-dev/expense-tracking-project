@@ -8,6 +8,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 
 import com.thonconnor.practice.expense_tracking.entities.IncomeEntity;
+import com.thonconnor.practice.expense_tracking.entities.TransactionEntity;
 
 @Component
 public class TransactionFilterSpecification<T> {
@@ -23,6 +24,8 @@ public class TransactionFilterSpecification<T> {
             String dateAttributeName = "expenseDate";
             if (classType == IncomeEntity.class) {
                 dateAttributeName = "incomeDate";
+            } else if (classType == TransactionEntity.class) {
+                dateAttributeName = "transactionDate";
             }
             return startDate == null || endDate == null ? null
                     : cb.between(root.get(dateAttributeName),
