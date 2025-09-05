@@ -39,10 +39,10 @@ public class TransactionEntity {
     private Timestamp createdDate;
     @Column(name = "transaction_date", nullable = false)
     private Timestamp transactionDate;
-    @OneToOne(cascade = CascadeType.PERSIST)
+    @OneToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
     @JoinColumn(name = "income_id", nullable = true)
     private IncomeEntity income;
-    @OneToOne(cascade = CascadeType.PERSIST)
+    @OneToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
     @JoinColumn(name = "expense_id", nullable = true)
     private ExpenseEntity expense;
     @Column(name = "transaction_type", nullable = false)
