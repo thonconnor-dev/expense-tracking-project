@@ -3,8 +3,6 @@ package com.thonconnor.practice.expense_tracking.controllers;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.thonconnor.practice.expense_tracking.mappers.TransactionMapper;
-import com.thonconnor.practice.expense_tracking.models.IncomeModel;
-import com.thonconnor.practice.expense_tracking.models.IncomesModel;
 import com.thonconnor.practice.expense_tracking.models.ResponseResult;
 import com.thonconnor.practice.expense_tracking.models.TransactionModel;
 import com.thonconnor.practice.expense_tracking.models.TransactionsModel;
@@ -13,6 +11,8 @@ import com.thonconnor.practice.expense_tracking.models.requests.TransactionInput
 import com.thonconnor.practice.expense_tracking.services.TransactionService;
 
 import io.swagger.v3.oas.annotations.Operation;
+import jakarta.validation.Valid;
+
 import org.springframework.web.bind.annotation.RequestBody;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -48,8 +48,8 @@ public class TransactionController {
      */
     @Operation(summary = "create new transaction")
     @PostMapping(path = "/transaction", consumes = "application/json", produces = "application/json")
-    public ResponseEntity<ResponseResult<TransactionModel>> createTransaction(@RequestBody TransactionInput input) {
-        // TODO missing validation on input
+    public ResponseEntity<ResponseResult<TransactionModel>> createTransaction(
+            @Valid @RequestBody TransactionInput input) {
         log.info("received request to create new transaction");
         TransactionModel response = transactionService.createTransaction(transactionMapper.map(input));
         log.info("transaction created successfully id={}", response.getId());

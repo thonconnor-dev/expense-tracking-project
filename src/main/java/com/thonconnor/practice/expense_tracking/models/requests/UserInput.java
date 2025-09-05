@@ -1,5 +1,7 @@
 package com.thonconnor.practice.expense_tracking.models.requests;
 
-public record UserInput(long userId) {
+import jakarta.validation.constraints.NotNull;
+
+public record UserInput(@NotNull Long userId) {
 
 }
