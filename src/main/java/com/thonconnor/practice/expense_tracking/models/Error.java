@@ -1,5 +1,4 @@
 package com.thonconnor.practice.expense_tracking.models;
 
-public class Error {
-
+public record Error(String message, String detail, String errorCode) {
 }
