@@ -16,13 +16,13 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 @Entity
-@Table(name = "user")
+@Table(name = "users")
 public class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(name = "username", nullable = false)
     private String username;
-    @Column(name = "created_date", nullable = false)
+    @Column(name = "created_date", nullable = false, insertable = false, updatable = false)
     private Timestamp createdDate;
 }

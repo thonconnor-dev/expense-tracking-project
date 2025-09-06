@@ -33,7 +33,7 @@ public class IncomeEntity {
     private Double amount;
     @Column(name = "description")
     private String description;
-    @Column(name = "created_date", nullable = false)
+    @Column(name = "created_date", nullable = false, insertable = false, updatable = false)
     private Timestamp createdDate;
     @Column(name = "income_date", nullable = false)
     private Timestamp incomeDate;

@@ -20,7 +20,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 @Entity
-@Table(name = "transaction")
+@Table(name = "transactions")
 public class TransactionEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,7 +35,7 @@ public class TransactionEntity {
     private Double amount;
     @Column(name = "description")
     private String description;
-    @Column(name = "created_date", nullable = false)
+    @Column(name = "created_date", nullable = false, insertable = false, updatable = false)
     private Timestamp createdDate;
     @Column(name = "transaction_date", nullable = false)
     private Timestamp transactionDate;
