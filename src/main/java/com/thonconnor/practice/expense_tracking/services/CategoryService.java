@@ -7,8 +7,10 @@ import org.springframework.data.util.Streamable;
 import org.springframework.stereotype.Service;
 
 import com.thonconnor.practice.expense_tracking.entities.CategoryEntity;
+import com.thonconnor.practice.expense_tracking.exceptions.TrackingCustomException;
 import com.thonconnor.practice.expense_tracking.mappers.CategoryMapper;
 import com.thonconnor.practice.expense_tracking.models.CategoryModel;
+import com.thonconnor.practice.expense_tracking.models.ErrorDetail;
 import com.thonconnor.practice.expense_tracking.repositories.CategoryRepository;
 
 import jakarta.transaction.Transactional;
@@ -87,10 +89,10 @@ public class CategoryService {
     @Transactional
     public CategoryModel editCategory(CategoryModel categoryModel) {
         log.info("edit category input={}", categoryModel.toString());
-        // TODO validate if id is given
         Optional<CategoryEntity> categoryEntityOpt = categoryRepository.findById(categoryModel.getId());
         if (!categoryEntityOpt.isPresent()) {
-            // TODO throw not found exception
+            log.error("missing category record id={}", categoryModel.getId());
+            throw new TrackingCustomException(ErrorDetail.CATEGORY_NOT_FOUND);
         }
 
         CategoryEntity updatedCategoryEntity = categoryMapper.mapEditedAttributes(categoryEntityOpt.get(),

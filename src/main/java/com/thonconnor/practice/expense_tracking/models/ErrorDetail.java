@@ -6,7 +6,9 @@ import lombok.Getter;
 
 @Getter
 public enum ErrorDetail {
-    NONE(null, HttpStatus.NOT_ACCEPTABLE);
+    CATEGORY_NOT_FOUND(new Error("no category record found", "given id is invalid", "ERR001"), HttpStatus.NOT_FOUND),
+    USER_NOT_FOUND(new Error("no user record found", "given id is invalid", "ERR002"), HttpStatus.NOT_FOUND);
+    ;
 
     private Error error;
     private HttpStatus httpStatus;
