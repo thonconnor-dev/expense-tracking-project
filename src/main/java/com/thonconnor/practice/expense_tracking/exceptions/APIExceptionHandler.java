@@ -1,7 +1,6 @@
 package com.thonconnor.practice.expense_tracking.exceptions;
 
 import java.util.List;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import org.springframework.http.HttpStatus;

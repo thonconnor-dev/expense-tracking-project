@@ -8,7 +8,6 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import com.thonconnor.practice.expense_tracking.entities.CategoryEntity;
-import com.thonconnor.practice.expense_tracking.entities.ExpenseEntity;
 import com.thonconnor.practice.expense_tracking.entities.TransactionEntity;
 import com.thonconnor.practice.expense_tracking.entities.UserEntity;
 import com.thonconnor.practice.expense_tracking.filters.TransactionFilterSpecification;
