@@ -33,7 +33,7 @@ public class ExpenseController {
             @RequestParam @DateTimeFormat(pattern = "MM-dd-yyyy") LocalDate endDate) {
         log.info("read expense - start");
         List<ExpenseModel> expenseModels = expenseService
-                .readExpenses(new ReadListInput(userId, startDate, endDate, 0));
+                .readExpenses(new ReadListInput(userId, startDate, endDate, null, null));
         log.info("read expense - end");
         return ResponseEntity.ok()
                 .body(ResponseResult.<ExpensesModel>builder().data(new ExpensesModel(expenseModels)).build());

@@ -31,13 +31,19 @@ import com.thonconnor.practice.expense_tracking.repositories.UserRepository;
 @ExtendWith(MockitoExtension.class)
 class TransactionServiceTest {
 
-    @Mock private TransactionMapper transactionMapper;
-    @Mock private CategoryRepository categoryRepository;
-    @Mock private UserRepository userRepository;
-    @Mock private TransactionRepository transactionRepository;
-    @Mock private TransactionFilterSpecification<TransactionEntity> specFactory;
+    @Mock
+    private TransactionMapper transactionMapper;
+    @Mock
+    private CategoryRepository categoryRepository;
+    @Mock
+    private UserRepository userRepository;
+    @Mock
+    private TransactionRepository transactionRepository;
+    @Mock
+    private TransactionFilterSpecification<TransactionEntity> specFactory;
 
-    @InjectMocks private TransactionService transactionService;
+    @InjectMocks
+    private TransactionService transactionService;
 
     @Test
     void createTransaction_setsIdFromSavedEntity() {
@@ -68,7 +74,7 @@ class TransactionServiceTest {
 
     @Test
     void readTransactionList_returnsMappedModels() {
-        var input = new ReadListInput("7", LocalDate.of(2025, 6, 1), LocalDate.of(2025, 6, 30), 0);
+        var input = new ReadListInput("7", LocalDate.of(2025, 6, 1), LocalDate.of(2025, 6, 30), null, null);
 
         when(specFactory.ownedBy(input.userId())).thenReturn((root, q, cb) -> null);
         when(specFactory.hasTransactionDateBetween(input.startDate(), input.endDate(), TransactionEntity.class))

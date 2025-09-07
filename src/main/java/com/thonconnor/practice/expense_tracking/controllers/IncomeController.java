@@ -32,7 +32,8 @@ public class IncomeController {
             @RequestParam @DateTimeFormat(pattern = "MM-dd-yyyy") LocalDate startDate,
             @RequestParam @DateTimeFormat(pattern = "MM-dd-yyyy") LocalDate endDate) {
         log.info("read income - start");
-        List<IncomeModel> incomeModels = incomeService.readIncomes(new ReadListInput(userId, startDate, endDate, 0));
+        List<IncomeModel> incomeModels = incomeService
+                .readIncomes(new ReadListInput(userId, startDate, endDate, null, null));
         log.info("read incomes - end");
         return ResponseEntity.ok()
                 .body(ResponseResult.<IncomesModel>builder().data(new IncomesModel(incomeModels)).build());

@@ -62,7 +62,7 @@ public class TransactionController {
             @RequestParam @DateTimeFormat(pattern = "MM-dd-yyyy") LocalDate endDate) {
         log.info("read transactions - start");
         List<TransactionModel> transactionModels = transactionService
-                .readTransactionList(new ReadListInput(userId, startDate, endDate, 0));
+                .readTransactionList(new ReadListInput(userId, startDate, endDate, null, null));
         log.info("read transactions - end");
         return ResponseEntity.ok()
                 .body(ResponseResult.<TransactionsModel>builder().data(new TransactionsModel(transactionModels))
