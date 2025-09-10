@@ -56,6 +56,7 @@ public class TransactionController {
         return ResponseEntity.ok().body(ResponseResult.<TransactionModel>builder().data(response).build());
     }
 
+    @Operation(summary = "list all transactions between given date range")
     @GetMapping(path = "/transactions", produces = "application/json")
     public ResponseEntity<ResponseResult<TransactionsModel>> readTransactions(@RequestParam String userId,
             @RequestParam @DateTimeFormat(pattern = "MM-dd-yyyy") LocalDate startDate,

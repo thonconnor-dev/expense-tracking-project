@@ -14,6 +14,7 @@ import com.thonconnor.practice.expense_tracking.models.ResponseResult;
 import com.thonconnor.practice.expense_tracking.models.requests.ReadListInput;
 import com.thonconnor.practice.expense_tracking.services.IncomeService;
 
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -27,6 +28,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class IncomeController {
     private final IncomeService incomeService;
 
+    @Operation(summary = "list all incomes between given date range")
     @GetMapping(path = "/incomes", produces = "application/json")
     public ResponseEntity<ResponseResult<IncomesModel>> readIncomes(@RequestParam String userId,
             @RequestParam @DateTimeFormat(pattern = "MM-dd-yyyy") LocalDate startDate,
