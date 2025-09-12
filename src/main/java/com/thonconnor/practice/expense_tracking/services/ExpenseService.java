@@ -27,10 +27,11 @@ public class ExpenseService {
 
     public List<ExpenseModel> readExpenses(ReadListInput readListInput) {
         log.info("read expense records input={}", readListInput);
-        Specification<ExpenseEntity> filterSpecification = Specification.allOf(
-                transactionFilterSpecification.ownedBy(readListInput.userId()),
-                transactionFilterSpecification.hasTransactionDateBetween(readListInput.startDate(),
-                        readListInput.endDate(), ExpenseEntity.class));
+        Specification<ExpenseEntity> filterSpecification =
+                Specification.allOf(transactionFilterSpecification.ownedBy(readListInput.userId()),
+                        transactionFilterSpecification.hasTransactionDateBetween(
+                                readListInput.startDate(), readListInput.endDate(),
+                                ExpenseEntity.class));
         List<ExpenseEntity> incomeEntities = expenseRepository.findAll(filterSpecification);
         log.info("record found={}", incomeEntities.size());
         return incomeEntities.stream().map(expenseMapper::map).collect(Collectors.toList());

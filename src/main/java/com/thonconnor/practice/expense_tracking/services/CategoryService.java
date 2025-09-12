@@ -35,8 +35,7 @@ public class CategoryService {
      */
     public Optional<CategoryModel> findById(Long id) {
         log.info("find category {}", id);
-        return categoryRepository.findById(id)
-                .map(categoryMapper::map);
+        return categoryRepository.findById(id).map(categoryMapper::map);
     }
 
     /**
@@ -46,9 +45,7 @@ public class CategoryService {
      */
     public List<CategoryModel> findAll() {
         log.info("find all categories");
-        return Streamable.of(categoryRepository.findAll())
-                .map(categoryMapper::map)
-                .toList();
+        return Streamable.of(categoryRepository.findAll()).map(categoryMapper::map).toList();
 
     }
 
@@ -61,8 +58,7 @@ public class CategoryService {
 
     public Optional<CategoryModel> findByName(String name) {
         log.info("find category by name {}", name);
-        return categoryRepository.findByName(name)
-                .map(categoryMapper::map);
+        return categoryRepository.findByName(name).map(categoryMapper::map);
     }
 
     /**
@@ -89,14 +85,15 @@ public class CategoryService {
     @Transactional
     public CategoryModel editCategory(CategoryModel categoryModel) {
         log.info("edit category input={}", categoryModel.toString());
-        Optional<CategoryEntity> categoryEntityOpt = categoryRepository.findById(categoryModel.getId());
+        Optional<CategoryEntity> categoryEntityOpt =
+                categoryRepository.findById(categoryModel.getId());
         if (!categoryEntityOpt.isPresent()) {
             log.error("missing category record id={}", categoryModel.getId());
             throw new TrackingCustomException(ErrorDetail.CATEGORY_NOT_FOUND);
         }
 
-        CategoryEntity updatedCategoryEntity = categoryMapper.mapEditedAttributes(categoryEntityOpt.get(),
-                categoryModel);
+        CategoryEntity updatedCategoryEntity =
+                categoryMapper.mapEditedAttributes(categoryEntityOpt.get(), categoryModel);
         categoryRepository.save(updatedCategoryEntity);
         return categoryModel;
     }

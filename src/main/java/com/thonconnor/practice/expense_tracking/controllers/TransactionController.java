@@ -10,7 +10,10 @@ import com.thonconnor.practice.expense_tracking.models.requests.ReadListInput;
 import com.thonconnor.practice.expense_tracking.models.requests.TransactionInput;
 import com.thonconnor.practice.expense_tracking.services.TransactionService;
 
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.info.Info;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
 import org.springframework.web.bind.annotation.RequestBody;
@@ -27,6 +30,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+@OpenAPIDefinition(info = @Info(title = "Expense Tracking", version = "0.1",
+                description = "Expense Tracking API"))
+@Tag(name = "Transaction API")
 @Slf4j
 @AllArgsConstructor
 @RestController
@@ -35,39 +41,42 @@ import org.springframework.web.bind.annotation.RequestParam;
  * Transaction endpoints (v1). Currently supports create.
  */
 public class TransactionController {
-    // Business logic for transactions
-    private TransactionService transactionService;
-    // Maps request models to domain models
-    private TransactionMapper transactionMapper;
+        // Business logic for transactions
+        private TransactionService transactionService;
+        // Maps request models to domain models
+        private TransactionMapper transactionMapper;
 
-    /**
-     * Create a new transaction.
-     * 
-     * @param input request body
-     * @return created transaction wrapped in ResponseResult
-     */
-    @Operation(summary = "create new transaction")
-    @PostMapping(path = "/transaction", consumes = "application/json", produces = "application/json")
-    public ResponseEntity<ResponseResult<TransactionModel>> createTransaction(
-            @Valid @RequestBody TransactionInput input) {
-        log.info("received request to create new transaction");
-        TransactionModel response = transactionService.createTransaction(transactionMapper.map(input));
-        log.info("transaction created successfully id={}", response.getId());
-        return ResponseEntity.ok().body(ResponseResult.<TransactionModel>builder().data(response).build());
-    }
+        /**
+         * Create a new transaction.
+         * 
+         * @param input request body
+         * @return created transaction wrapped in ResponseResult
+         */
+        @Operation(summary = "create new transaction")
+        @PostMapping(path = "/transaction", consumes = "application/json",
+                        produces = "application/json")
+        public ResponseEntity<ResponseResult<TransactionModel>> createTransaction(
+                        @Valid @RequestBody TransactionInput input) {
+                log.info("received request to create new transaction");
+                TransactionModel response =
+                                transactionService.createTransaction(transactionMapper.map(input));
+                log.info("transaction created successfully id={}", response.getId());
+                return ResponseEntity.ok().body(
+                                ResponseResult.<TransactionModel>builder().data(response).build());
+        }
 
-    @Operation(summary = "list all transactions between given date range")
-    @GetMapping(path = "/transactions", produces = "application/json")
-    public ResponseEntity<ResponseResult<TransactionsModel>> readTransactions(@RequestParam String userId,
-            @RequestParam @DateTimeFormat(pattern = "MM-dd-yyyy") LocalDate startDate,
-            @RequestParam @DateTimeFormat(pattern = "MM-dd-yyyy") LocalDate endDate) {
-        log.info("read transactions - start");
-        List<TransactionModel> transactionModels = transactionService
-                .readTransactionList(new ReadListInput(userId, startDate, endDate, null, null));
-        log.info("read transactions - end");
-        return ResponseEntity.ok()
-                .body(ResponseResult.<TransactionsModel>builder().data(new TransactionsModel(transactionModels))
-                        .build());
-    }
+        @Operation(summary = "list all transactions between given date range")
+        @GetMapping(path = "/transactions", produces = "application/json")
+        public ResponseEntity<ResponseResult<TransactionsModel>> readTransactions(
+                        @RequestParam String userId,
+                        @RequestParam @DateTimeFormat(pattern = "MM-dd-yyyy") LocalDate startDate,
+                        @RequestParam @DateTimeFormat(pattern = "MM-dd-yyyy") LocalDate endDate) {
+                log.info("read transactions - start");
+                List<TransactionModel> transactionModels = transactionService.readTransactionList(
+                                new ReadListInput(userId, startDate, endDate, null, null));
+                log.info("read transactions - end");
+                return ResponseEntity.ok().body(ResponseResult.<TransactionsModel>builder()
+                                .data(new TransactionsModel(transactionModels)).build());
+        }
 
 }

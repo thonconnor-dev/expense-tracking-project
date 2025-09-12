@@ -15,6 +15,7 @@ import com.thonconnor.practice.expense_tracking.models.requests.ReadListInput;
 import com.thonconnor.practice.expense_tracking.services.IncomeService;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -25,19 +26,21 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequestMapping("/v1")
 @AllArgsConstructor
 @Slf4j
+@Tag(name = "Income API")
 public class IncomeController {
-    private final IncomeService incomeService;
+        private final IncomeService incomeService;
 
-    @Operation(summary = "list all incomes between given date range")
-    @GetMapping(path = "/incomes", produces = "application/json")
-    public ResponseEntity<ResponseResult<IncomesModel>> readIncomes(@RequestParam String userId,
-            @RequestParam @DateTimeFormat(pattern = "MM-dd-yyyy") LocalDate startDate,
-            @RequestParam @DateTimeFormat(pattern = "MM-dd-yyyy") LocalDate endDate) {
-        log.info("read income - start");
-        List<IncomeModel> incomeModels = incomeService
-                .readIncomes(new ReadListInput(userId, startDate, endDate, null, null));
-        log.info("read incomes - end");
-        return ResponseEntity.ok()
-                .body(ResponseResult.<IncomesModel>builder().data(new IncomesModel(incomeModels)).build());
-    }
+        @Operation(summary = "list all incomes between given date range")
+        @GetMapping(path = "/incomes", produces = "application/json")
+        public ResponseEntity<ResponseResult<IncomesModel>> readIncomes(@RequestParam String userId,
+                        @RequestParam @DateTimeFormat(pattern = "MM-dd-yyyy") LocalDate startDate,
+                        @RequestParam @DateTimeFormat(pattern = "MM-dd-yyyy") LocalDate endDate) {
+                log.info("read income - start");
+                List<IncomeModel> incomeModels = incomeService
+                                .readIncomes(new ReadListInput(userId, startDate, endDate, null, null));
+                log.info("read incomes - end");
+                return ResponseEntity.ok()
+                                .body(ResponseResult.<IncomesModel>builder().data(new IncomesModel(incomeModels))
+                                                .build());
+        }
 }

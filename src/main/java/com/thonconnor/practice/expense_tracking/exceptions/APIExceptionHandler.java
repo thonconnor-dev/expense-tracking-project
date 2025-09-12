@@ -19,28 +19,31 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class APIExceptionHandler {
 
-    @ExceptionHandler(TrackingCustomException.class)
-    public ResponseEntity<ResponseResult<BaseModel>> handle(TrackingCustomException trackingCustomException) {
-        log.error("TrackingCustomException handler", trackingCustomException);
-        return ResponseEntity.status(trackingCustomException.getHttpStatus().value())
-                .body(ResponseResult.<BaseModel>builder().errors(List.of(trackingCustomException.getError())).build());
-    }
+        @ExceptionHandler(TrackingCustomException.class)
+        public ResponseEntity<ResponseResult<BaseModel>> handle(TrackingCustomException trackingCustomException) {
+                log.error("TrackingCustomException handler", trackingCustomException);
+                return ResponseEntity.status(trackingCustomException.getHttpStatus().value())
+                                .body(ResponseResult.<BaseModel>builder()
+                                                .errors(List.of(trackingCustomException.getError())).build());
+        }
 
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<ResponseResult<BaseModel>> handle(
-            MethodArgumentNotValidException methodArgumentNotValidException) {
-        log.error("exception while validate input ", methodArgumentNotValidException);
-        List<Error> errors = methodArgumentNotValidException.getBindingResult()
-                .getFieldErrors().stream().map(fieldError -> new Error(fieldError.getDefaultMessage(),
-                        fieldError.getObjectName(), "400"))
-                .collect(Collectors.toList());
-        return ResponseEntity.badRequest().body(ResponseResult.<BaseModel>builder().errors(errors).build());
-    }
+        @ExceptionHandler(MethodArgumentNotValidException.class)
+        public ResponseEntity<ResponseResult<BaseModel>> handle(
+                        MethodArgumentNotValidException methodArgumentNotValidException) {
+                log.error("exception while validate input ", methodArgumentNotValidException);
+                List<Error> errors = methodArgumentNotValidException.getBindingResult()
+                                .getFieldErrors().stream().map(fieldError -> new Error(fieldError.getDefaultMessage(),
+                                                fieldError.getObjectName(), "400"))
+                                .collect(Collectors.toList());
+                return ResponseEntity.badRequest().body(ResponseResult.<BaseModel>builder().errors(errors).build());
+        }
 
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<ResponseResult<BaseModel>> handle(Exception exception) {
-        log.error("exception handler ", exception);
-        return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(ResponseResult.<BaseModel>builder()
-                .errors(List.of(new Error(exception.getMessage(), exception.getLocalizedMessage(), "503"))).build());
-    }
+        @ExceptionHandler(Exception.class)
+        public ResponseEntity<ResponseResult<BaseModel>> handle(Exception exception) {
+                log.error("exception handler ", exception);
+                return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(ResponseResult.<BaseModel>builder()
+                                .errors(List.of(new Error(exception.getMessage(), exception.getLocalizedMessage(),
+                                                "503")))
+                                .build());
+        }
 }

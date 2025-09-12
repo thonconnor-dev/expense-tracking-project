@@ -15,6 +15,7 @@ import com.thonconnor.practice.expense_tracking.models.requests.ReadListInput;
 import com.thonconnor.practice.expense_tracking.services.ExpenseService;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -25,19 +26,21 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequestMapping("/v1")
 @AllArgsConstructor
 @Slf4j
+@Tag(name = "Expense API")
 public class ExpenseController {
-    private final ExpenseService expenseService;
+        private final ExpenseService expenseService;
 
-    @Operation(summary = "list all expenses between given date range")
-    @GetMapping(path = "/expenses", produces = "application/json")
-    public ResponseEntity<ResponseResult<ExpensesModel>> readExpenses(@RequestParam String userId,
-            @RequestParam @DateTimeFormat(pattern = "MM-dd-yyyy") LocalDate startDate,
-            @RequestParam @DateTimeFormat(pattern = "MM-dd-yyyy") LocalDate endDate) {
-        log.info("read expense - start");
-        List<ExpenseModel> expenseModels = expenseService
-                .readExpenses(new ReadListInput(userId, startDate, endDate, null, null));
-        log.info("read expense - end");
-        return ResponseEntity.ok()
-                .body(ResponseResult.<ExpensesModel>builder().data(new ExpensesModel(expenseModels)).build());
-    }
+        @Operation(summary = "list all expenses between given date range")
+        @GetMapping(path = "/expenses", produces = "application/json")
+        public ResponseEntity<ResponseResult<ExpensesModel>> readExpenses(@RequestParam String userId,
+                        @RequestParam @DateTimeFormat(pattern = "MM-dd-yyyy") LocalDate startDate,
+                        @RequestParam @DateTimeFormat(pattern = "MM-dd-yyyy") LocalDate endDate) {
+                log.info("read expense - start");
+                List<ExpenseModel> expenseModels = expenseService
+                                .readExpenses(new ReadListInput(userId, startDate, endDate, null, null));
+                log.info("read expense - end");
+                return ResponseEntity.ok()
+                                .body(ResponseResult.<ExpensesModel>builder().data(new ExpensesModel(expenseModels))
+                                                .build());
+        }
 }
